@@ -1,0 +1,55 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: String!
+  email: String!
+  username: String!
+}
+
+type AuthResponse {
+  accessToken: String!
+  user: User!
+}
+
+type MessageModel {
+  _id: ID!
+  content: String!
+  conversation: ID!
+  sender: ID!
+  recipient: ID
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+}
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+type Query {
+  healthCheck: String!
+  getMessages(conversationId: String!): [MessageModel!]!
+}
+
+type Mutation {
+  register(input: RegisterInput!): AuthResponse!
+  login(input: LoginInput!): AuthResponse!
+  sendMessage(content: String!, conversationId: String!): MessageModel!
+}
+
+input RegisterInput {
+  username: String!
+  email: String!
+  password: String!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Subscription {
+  messageAdded(conversationId: String!): MessageModel!
+}
